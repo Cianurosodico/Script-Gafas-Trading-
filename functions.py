@@ -2,8 +2,7 @@ import config
 from binance.client import Client
 import time
 
-dias = config.dias
-client = Client(config.API_KEY, config.API_SECRET, tld='com')
+client = Client(tld='com')
 
 listTiks = []
 
@@ -30,10 +29,10 @@ def buscarTicks():
         ticks.append(tick['symbol'])
     return ticks
 
-def analizarMoneda(tick):
+def analizarMoneda(tick, days_toeval):
     while True:
         try:
-            klines = client.futures_klines(symbol=tick, interval=client.KLINE_INTERVAL_1DAY, limit=dias)
+            klines = client.futures_klines(symbol=tick, interval=client.KLINE_INTERVAL_1DAY, limit=days_toeval)
         except Exception as e:
             print(e)
             archivo = open("log.txt", "a")
